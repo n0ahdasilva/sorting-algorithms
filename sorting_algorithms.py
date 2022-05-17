@@ -19,6 +19,7 @@
         quick_sort()
             partition()
         radix_sort()
+            sort_digits()
         selection_sort()
         shell_sort()
 
@@ -32,7 +33,7 @@
         2. Adding new sorting algorithm fumctions.
     
     VERSION     DATE        WHO     DETAIL
-    0.0.1b      2022.05.12  Noah    Adding new sorting algorithm functions.
+    0.0.1b      2022.05.17  Noah    Adding new sorting algorithm functions.
 '''
 
 import math
@@ -114,10 +115,9 @@ class SortingAlgorithms:
             # Finally, 63000 is inserted into bucket-18805.
             buckets[bucket_index].append(nums_arr[j])
         
-        # Sort individual buckets using insertion_sort().
-        # NOTE: insertion_sort() is currently the fastest algorithm in this class.
+        # Sort individual buckets using selection_sort().
         for i in range(bucket_count):
-            buckets[i] = self.insertion_sort(buckets[i])
+            buckets[i] = self.selection_sort(buckets[i])
 
         # Concatenate the results together back into one list.
         k = 0
@@ -352,6 +352,8 @@ class SortingAlgorithms:
             # Return the position from where partition is done.
             return i + 1
 
+        # The main function to sort an array of given size LIST_LENGTH.
+
         LIST_LENGTH = len(nums_arr)
         # Initializing our empty variables (usually only used for the first call).
         if low == None:
@@ -372,21 +374,94 @@ class SortingAlgorithms:
         return nums_arr
 
 
+    # NOTE - Time Complexity:
+    #           Best	O(n+k)
+    #           Average	O(n+k)
+    #           Worst	O(n+k)
     def radix_sort(self, nums_arr):
+
+        # Using modified counting sort to sort elements in the basis of significant places.
+        def sort_digits(nums_arr, place):
             
-        LIST_LENGTH = len(nums_arr)
-        'https://www.programiz.com/dsa/radix-sort'
+            LIST_LENGTH = len(nums_arr)
+            output = [0] * LIST_LENGTH
+            count = [0] * 10
+
+            # Calculate count of elements
+            for i in range(0, LIST_LENGTH):
+                index = nums_arr[i] // place
+                count[index % 10] += 1
+
+            # Calculate cumulative count
+            for i in range(1, 10):
+                count[i] += count[i - 1]
+
+            # Place the elements in sorted order
+            i = LIST_LENGTH - 1
+            while i >= 0:
+                index = nums_arr[i] // place
+                output[count[index % 10] - 1] = nums_arr[i]
+                count[index % 10] -= 1
+                i -= 1
+
+            for i in range(0, LIST_LENGTH):
+                nums_arr[i] = output[i]  
+
+        # The main function to sort an array of given size LIST_LENGTH.
+        
+        # Get maximum element
+        max_element = max(nums_arr)
+
+        # Apply counting sort to sort elements based on place value.
+        place = 1
+        while max_element // place > 0:
+            sort_digits(nums_arr, place)
+            place *= 10       
+        
         return nums_arr
 
-
+    # NOTE - Time Complexity:
+    #           Best	O(n^2)
+    #           Average	O(n^2)
+    #           Worst	O(n^2)
     def selection_sort(self, nums_arr):
 
         LIST_LENGTH = len(nums_arr)
-        'https://www.programiz.com/dsa/selection-sort'
+        
+        for step in range(LIST_LENGTH):
+            min_idx = step
+
+            for i in range(step + 1, LIST_LENGTH):
+                
+                # To sort in descending order, change > to < in this line
+                # select the minimum element in each loop.
+                if nums_arr[i] < nums_arr[min_idx]:
+                    min_idx = i
+                
+            # Put min at the correct position.
+            (nums_arr[step], nums_arr[min_idx]) = (nums_arr[min_idx], nums_arr[step])
+
         return nums_arr
 
-    
+    # NOTE - Time Complexity:
+    #           Best	O(n*log n)
+    #           Average	O(n^log n)
+    #           Worst	O(n^2)
     def shell_sort(self, nums_arr):
+        
         LIST_LENGTH = len(nums_arr)
-        'https://www.programiz.com/dsa/shell-sort'
+
+        # Rearrange elements at each n/2, n/4, n/8, ... intervals
+        interval = LIST_LENGTH // 2
+        while interval > 0:
+            for i in range(interval, LIST_LENGTH):
+                temp = nums_arr[i]
+                j = i
+                while j >= interval and nums_arr[j - interval] > temp:
+                    nums_arr[j] = nums_arr[j - interval]
+                    j -= interval
+
+                nums_arr[j] = temp
+            interval //= 2
+
         return nums_arr

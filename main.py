@@ -21,7 +21,7 @@
         2. Adding new sorting algorithm fumctions.
     
     VERSION     DATE        WHO     DETAIL
-    0.0.1b      2022.05.12  Noah    Adding new sorting algorithm functions.
+    0.0.1b      2022.05.17  Noah    Adding new sorting algorithm functions.
 '''
 
 import secrets
@@ -43,46 +43,48 @@ def rand_nums_gen(ARRAY_LENGTH):
 
 def main():
 
-    ARRAY_LENGTH = 10000
+    ARRAY_LENGTH = 5000
     SIG_FIG = 5
 
     NUM_ARR = rand_nums_gen(ARRAY_LENGTH)
+
+    print('\nSorting for', ARRAY_LENGTH, 'elements...\n')
 
     arr_to_sort = NUM_ARR   # Ensure that the original array is not modified for fair comparison.
     start_time = time.process_time()    # Start timer for the sorting algorithm.
     s.bubble_sort(arr_to_sort)  # Sort the array using bubble sort.
     end_time = (time.process_time() - start_time)   # Stop timer after the array is sorted.
-    print(ARRAY_LENGTH, 'numbers sorted in', round(end_time, SIG_FIG), 'using bubble_sort().')
+    print('bubble_sort()\t sorted in', round(end_time, SIG_FIG))
 
     arr_to_sort = NUM_ARR   # Ensure that the original array is not modified for fair comparison.
     start_time = time.process_time()    # Start timer for the sorting algorithm.
-    s.bucket_sort(arr_to_sort) # Sort the array using bucket sort with insertion_sort() per bucket.
+    s.bucket_sort(arr_to_sort) # Sort the array using bucket sort with selection_sort() per bucket.
     end_time = (time.process_time() - start_time)   # Stop timer after the array is sorted.
-    print(ARRAY_LENGTH, 'numbers sorted in', round(end_time, SIG_FIG), 'using bucket_sort() w/ insertion_sort() per bucket.')
+    print('bucket_sort()\t sorted in', round(end_time, SIG_FIG), 'using selection_sort() per bucket.')
 
     arr_to_sort = NUM_ARR   # Ensure that the original array is not modified for fair comparison.
     start_time = time.process_time()    # Start timer for the sorting algorithm.
     s.counting_sort(arr_to_sort)    # Sort the array using counting sort.
     end_time = (time.process_time() - start_time)   # Stop timer after the array is sorted.
-    print(ARRAY_LENGTH, 'numbers sorted in', round(end_time, SIG_FIG), 'using counting_sort().')
+    print('counting_sort()\t sorted in', round(end_time, SIG_FIG))
 
     arr_to_sort = NUM_ARR   # Ensure that the original array is not modified for fair comparison.
     start_time = time.process_time()    # Start timer for the sorting algorithm.
     s.heap_sort(arr_to_sort)    # Sort the array using heap sort.
     end_time = (time.process_time() - start_time)   # Stop timer after the array is sorted.
-    print(ARRAY_LENGTH, 'numbers sorted in', round(end_time, SIG_FIG), 'using heap_sort().')
+    print('heap_sort()\t sorted in', round(end_time, SIG_FIG))
 
     arr_to_sort = NUM_ARR   # Ensure that the original array is not modified for fair comparison.
     start_time = time.process_time()    # Start timer for the sorting algorithm.
     s.insertion_sort(arr_to_sort)   # Sort the array using insertion sort.
     end_time = (time.process_time() - start_time)   # Stop timer after the array is sorted.
-    print(ARRAY_LENGTH, 'numbers sorted in', round(end_time, SIG_FIG), 'using insertion_sort().')
+    print('insertion_sort() sorted in', round(end_time, SIG_FIG))
     
     arr_to_sort = NUM_ARR   # Ensure that the original array is not modified for fair comparison.
     start_time = time.process_time()    # Start timer for the sorting algorithm.
     s.merge_sort(arr_to_sort)   # Sort the array using merge sort.
     end_time = (time.process_time() - start_time)   # Stop timer after the array is sorted.
-    print(ARRAY_LENGTH, 'numbers sorted in', round(end_time, SIG_FIG), 'using merge_sort().')
+    print('merge_sort()\t sorted in', round(end_time, SIG_FIG))
 
     if len(NUM_ARR) < 998:    # If the array is too large to sort using quick sort, skip it. (Recursion limit error)
         
@@ -90,10 +92,30 @@ def main():
         start_time = time.process_time()    # Start timer for the sorting algorithm.
         s.quick_sort(arr_to_sort)   # Sort the array using quick sort.
         end_time = (time.process_time() - start_time)   # Stop timer after the array is sorted.
-        print(ARRAY_LENGTH, 'numbers sorted in', round(end_time, SIG_FIG), 'using quick_sort().')
+        print('quick_sort()\t sorted in', round(end_time, SIG_FIG))
     
     else:
-        print('Skipping quick_sort() because the array is too large. Will cause recursion limit error.')
+        print('Skipping quick_sort(), array too large. Recursion limit error.')
+
+    arr_to_sort = NUM_ARR   # Ensure that the original array is not modified for fair comparison.
+    start_time = time.process_time()    # Start timer for the sorting algorithm.
+    s.radix_sort(arr_to_sort)   # Sort the array using radix sort.
+    end_time = (time.process_time() - start_time)   # Stop timer after the array is sorted.
+    print('radix_sort()\t sorted in', round(end_time, SIG_FIG))
+
+    arr_to_sort = NUM_ARR   # Ensure that the original array is not modified for fair comparison.
+    start_time = time.process_time()    # Start timer for the sorting algorithm.
+    s.selection_sort(arr_to_sort)   # Sort the array using selection sort.
+    end_time = (time.process_time() - start_time)   # Stop timer after the array is sorted.
+    print('selection_sort() sorted in', round(end_time, SIG_FIG))
+
+    arr_to_sort = NUM_ARR   # Ensure that the original array is not modified for fair comparison.
+    start_time = time.process_time()    # Start timer for the sorting algorithm.
+    s.shell_sort(arr_to_sort)   # Sort the array using shell sort.
+    end_time = (time.process_time() - start_time)   # Stop timer after the array is sorted.
+    print('shell_sort()\t sorted in', round(end_time, SIG_FIG))
+
+    print('\nDONE!\n')
 
 if __name__ == "__main__":  # File is being run directly.
     main()
